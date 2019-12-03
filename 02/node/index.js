@@ -14,7 +14,7 @@ function part1(array, startValues = [12, 2]){
     for (const [pos, value] of Object.entries(lookup)) {
         if(value.isOpcode){
             const sum = value.operation(lookup[lookup[placesFromPosition(pos,1)].value], lookup[lookup[placesFromPosition(pos,2)].value])
-            if(typeof sum === "undefined"){
+            if(!sum){
                 break
             }
             lookup[lookup[placesFromPosition(pos,3)].value].value = sum;
@@ -42,7 +42,7 @@ function placesFromPosition(pos, additional){
 
 function getOperation(value){
     const lookup = {1: function add(x,y){ return x.value + y.value }, 2: function multiply(x, y){ return x.value * y.value}, 99: function end(){
-        return
+        return false
     }}
     return Object.keys(lookup).includes(String(value)) ? lookup[value] : null;
 }
