@@ -2,11 +2,9 @@ const fs = require('fs');
 const path = require('path');    
 const inputPath = path.join(__dirname, 'input');
 
-function part1(array){
-    const newValues = [12, 2]
-    const modified = [array[0], ...newValues, ...array.slice(3)]
+function part1(array, startValues = [12, 2]){
     const lookup = {};
-    modified.forEach((value, position) => {
+    [array[0], ...startValues, ...array.slice(3)].forEach((value, position) => {
         lookup[position] = {
             value,
             isOpcode: [1,2,99].includes(value) && position % 4 === 0,
@@ -22,7 +20,11 @@ function part1(array){
             lookup[lookup[placesFromPosition(pos,3)].value].value = sum;
         }
     }
-    return lookup['0']
+    return Object.values(lookup).map(({value})=> value)[0]
+}
+
+function part2(){
+
 }
 
 function placesFromPosition(pos, additional){
@@ -41,3 +43,4 @@ function call(compute = part1){
 }
 
 console.log(call(part1))
+console.log(call(part2))
