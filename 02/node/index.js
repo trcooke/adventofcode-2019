@@ -23,8 +23,17 @@ function part1(array, startValues = [12, 2]){
     return Object.values(lookup).map(({value})=> value)[0]
 }
 
-function part2(){
-
+function part2(array){
+    const range = Array.from(Array(100).keys());
+    let answer = 0;
+    range.forEach(noun => {
+        range.forEach(verb => {
+            if(part1(array, [noun, verb]) === 19690720){
+                answer = 100 * noun + verb;
+            }
+        })
+    })
+    return answer
 }
 
 function placesFromPosition(pos, additional){
@@ -38,9 +47,9 @@ function getOperation(value){
     return Object.keys(lookup).includes(String(value)) ? lookup[value] : null;
 }
 
-function call(compute = part1){
+function execute(compute = part1){
     return compute(fs.readFileSync(inputPath, 'utf8').split(",").map(v => Number(v)));
 }
 
-console.log(call(part1))
-console.log(call(part2))
+console.log(execute(part1))
+console.log(execute(part2))
